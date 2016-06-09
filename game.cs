@@ -10,19 +10,20 @@ class Game
 {
 	// member variables
 	public Surface screen;					// background surface for printing etc.
-	Mesh mesh, floor;						// a mesh to draw using OpenGL
+	Mesh mesh, floor, ding;						// a mesh to draw using OpenGL
 	const float PI = 3.1415926535f;			// PI
 	float a = 0;							// teapot rotation angle
 	Stopwatch timer;						// timer for measuring frame duration
 	Shader shader;							// shader to use for rendering
-	Texture wood;							// texture to use for rendering
+	Texture wood, paint;							// texture to use for rendering
 
 	// initialize
 	public void Init()
 	{
 		// load teapot
 		mesh = new Mesh( "../../assets/teapot.obj" );
-		floor = new Mesh( "../../assets/floor.obj" );
+		floor = new Mesh( "../../assets/floortest.obj" );
+            ding = new Mesh("../../assets/objectje.obj");
 		// initialize stopwatch
 		timer = new Stopwatch();
 		timer.Reset();
@@ -31,13 +32,14 @@ class Game
 		shader = new Shader( "../../shaders/vs.glsl", "../../shaders/fs.glsl" );
 		// load a texture
 		wood = new Texture( "../../assets/wood.jpg" );
+            paint = new Texture("../../assets/paint.jpg");
 	}
 
 	// tick for background surface
 	public void Tick()
 	{
 		screen.Clear( 0 );
-		screen.Print( "hello world", 2, 2, 0xffff00 );
+		//screen.Print( "hello world", 2, 2, 0xffff00 );
 	}
 
 	// tick for OpenGL rendering code
@@ -51,15 +53,18 @@ class Game
 		// prepare matrix for vertex shader
 		Matrix4 transform = Matrix4.CreateFromAxisAngle( new Vector3( 0, 1, 0 ), a );
 		transform *= Matrix4.CreateTranslation( 0, -4, -15 );
-		transform *= Matrix4.CreatePerspectiveFieldOfView( 1.2f, 1.3f, .1f, 1000 );
+		transform *= Matrix4.CreatePerspectiveFieldOfView( 1.3f, 1.3f, .1f, 1000 );
 
 		// update rotation
 		a += 0.001f * frameDuration; 
 		if (a > 2 * PI) a -= 2 * PI;
 
 		// render scene
-		mesh.Render( shader, transform, wood );
-		floor.Render( shader, transform, wood );
+		//mesh.Render( shader, transform, wood );
+		floor.Render( shader, transform, paint );
+        //ding.Render(shader, transform, paint);
+
+        // roep hier de sceneGraph aan met de door userinput aangepaste cameramatrix!
 	}
 }
 

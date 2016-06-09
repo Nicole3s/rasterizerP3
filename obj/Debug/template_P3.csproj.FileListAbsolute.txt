@@ -1,1 +1,8 @@
 C:\Users\Nicole\Documents\UU\informatica\jaar 1\4 Graphics\P3\rasterizer\bin\Debug\template_P3.exe.config
+C:\Users\Laura\Documents\GitHub\rasterizerP3\bin\Debug\template_P3.exe.config
+C:\Users\Laura\Documents\GitHub\rasterizerP3\bin\Debug\template_P3.exe
+C:\Users\Laura\Documents\GitHub\rasterizerP3\bin\Debug\template_P3.pdb
+C:\Users\Laura\Documents\GitHub\rasterizerP3\bin\Debug\OpenTK.dll
+C:\Users\Laura\Documents\GitHub\rasterizerP3\obj\Debug\template_P3.csprojResolveAssemblyReference.cache
+C:\Users\Laura\Documents\GitHub\rasterizerP3\obj\Debug\template_P3.exe
+C:\Users\Laura\Documents\GitHub\rasterizerP3\obj\Debug\template_P3.pdb

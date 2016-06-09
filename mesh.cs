@@ -17,6 +17,8 @@ public class Mesh
 	int triangleBufferId;					// triangle buffer
 	int quadBufferId;						// quad buffer
 
+    // NB voeg een model view matrix toe!
+
 	// constructor
 	public Mesh( string fileName )
 	{

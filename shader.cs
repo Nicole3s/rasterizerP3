@@ -6,7 +6,10 @@ namespace Template_P3 {
 
 public class Shader
 {
-	// data members
+	// implementeer tenminste één shader met het complete Phong shading model
+
+
+    // data members
 	public int programID, vsID, fsID;
 	public int attribute_vpos;
 	public int attribute_vnrm;
