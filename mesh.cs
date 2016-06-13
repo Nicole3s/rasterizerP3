@@ -15,9 +15,11 @@ public class Mesh
 	public ObjQuad[] quads;					// quads (4 vertex indices)
 	int vertexBufferId;						// vertex buffer
 	int triangleBufferId;					// triangle buffer
-	int quadBufferId;						// quad buffer
+	int quadBufferId;                       // quad buffer
 
-    // NB voeg een model view matrix toe!
+        // NB voeg een model view matrix toe!
+        // NB voeg een transform methode toe, 
+        // waar je eigen parameters voor de draaiing e.d. kunt meegeven!
 
 	// constructor
 	public Mesh( string fileName )

@@ -10,20 +10,22 @@ class Game
 {
 	// member variables
 	public Surface screen;					// background surface for printing etc.
-	Mesh mesh, floor, ding;						// a mesh to draw using OpenGL
+	Mesh mesh, floor, ding, klok_basis;						// a mesh to draw using OpenGL
 	const float PI = 3.1415926535f;			// PI
-	float a = 0;							// teapot rotation angle
+	float a = 0, b = 0;							// teapot rotation angle
 	Stopwatch timer;						// timer for measuring frame duration
 	Shader shader;							// shader to use for rendering
-	Texture wood, paint;							// texture to use for rendering
+	Texture wood, paint, wol;							// texture to use for rendering
 
 	// initialize
 	public void Init()
 	{
 		// load teapot
 		mesh = new Mesh( "../../assets/teapot.obj" );
-		floor = new Mesh( "../../assets/floortest.obj" );
-            ding = new Mesh("../../assets/objectje.obj");
+		floor = new Mesh( "../../assets/floortest2.obj" );
+        ding = new Mesh("../../assets/objectje.obj");
+        klok_basis = new Mesh("../../assets/klok_basis.obj");
+
 		// initialize stopwatch
 		timer = new Stopwatch();
 		timer.Reset();
@@ -32,14 +34,14 @@ class Game
 		shader = new Shader( "../../shaders/vs.glsl", "../../shaders/fs.glsl" );
 		// load a texture
 		wood = new Texture( "../../assets/wood.jpg" );
-            paint = new Texture("../../assets/paint.jpg");
+        paint = new Texture("../../assets/paint.jpg");
+        wol = new Texture("../../assets/wol.jpg");
 	}
 
 	// tick for background surface
 	public void Tick()
 	{
 		screen.Clear( 0 );
-		//screen.Print( "hello world", 2, 2, 0xffff00 );
 	}
 
 	// tick for OpenGL rendering code
@@ -52,16 +54,23 @@ class Game
 	
 		// prepare matrix for vertex shader
 		Matrix4 transform = Matrix4.CreateFromAxisAngle( new Vector3( 0, 1, 0 ), a );
-		transform *= Matrix4.CreateTranslation( 0, -4, -15 );
-		transform *= Matrix4.CreatePerspectiveFieldOfView( 1.3f, 1.3f, .1f, 1000 );
+        Matrix4 transformfloor = Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), a);
 
-		// update rotation
-		a += 0.001f * frameDuration; 
+            transformfloor *= transform;
+
+        transform *= Matrix4.CreateTranslation(0, -4, -15); // BEPAAL DE LOCATIE van het midden van het object
+        transform *= Matrix4.CreatePerspectiveFieldOfView(1.3f, 1.3f, .1f, 1000);
+
+        transformfloor *= Matrix4.CreateTranslation(0, -4, -35);
+        transformfloor *= Matrix4.CreatePerspectiveFieldOfView(1.3f, 1.3f, .1f, 1000);
+            
+
+            // update rotation
+            a += 0.001f * frameDuration; 
 		if (a > 2 * PI) a -= 2 * PI;
-
-		// render scene
-		//mesh.Render( shader, transform, wood );
-		floor.Render( shader, transform, paint );
+            // render scene
+        klok_basis.Render( shader, transform, wol );        
+		floor.Render( shader, transformfloor, paint );
         //ding.Render(shader, transform, paint);
 
         // roep hier de sceneGraph aan met de door userinput aangepaste cameramatrix!

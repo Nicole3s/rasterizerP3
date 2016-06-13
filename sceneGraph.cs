@@ -3,19 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
-namespace template_P3
+namespace Template_P3
 {
     class sceneGraph
     {
+        Mesh current, parent;
+        //LinkedList<M>
+
         // bestaat uit hierarchie van meshes
         // wikipedia zei: linked lists
         // takenlijstje zegt: datastructuur implementeren, dus linked list is zeker
-        //  een mogelijkheid
+        // een mogelijkheid
 
         // EISEN: er mogen geen restricties staan op de diepte of op het aantal meshes.
 
-        // void Render(Matrix cameramatrix)
+            /*
+        public void Render(Matrix4 cameramatrix)
+        {
+            if (parent != null)
+            {
+                cameramatrix *= parent;
+            }
+        } */
+
         // render hier alle meshes in de hierarchie RECURSIEF:
             // Add a Render method to the scene graph class that 
             // recursively processes the nodes in the tree, 
