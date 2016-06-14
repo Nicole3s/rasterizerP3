@@ -8,7 +8,7 @@ namespace Template_P3
 {
     class scenenode
     {
-        Mesh current, parent;
+        public Mesh current, parent;
 
         scenenode(Mesh mesh, Mesh parent)
         {

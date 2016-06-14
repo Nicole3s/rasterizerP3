@@ -19,7 +19,7 @@ namespace Template_P3
         Stopwatch timer;                        // timer for measuring frame duration
         Shader shader;                          // shader to use for rendering
         Shader postproc;                        // shader to use for post processing
-        Texture wood, paint, wol;                           // texture to use for rendering
+        Texture wood, paint, wol;               // texture to use for rendering
         RenderTarget target;                    // intermediate render target
         ScreenQuad quad;                        // screen filling quad for post processing
         bool useRenderTarget = true;
@@ -30,7 +30,7 @@ namespace Template_P3
             // load teapot
             mesh = new Mesh("../../assets/teapot.obj");
             floor = new Mesh("../../assets/floortest2.obj");
-            klok_basis = new Mesh("../../assets/donut.obj");
+            klok_basis = new Mesh("../../assets/klok_basis.obj");
             // initialize stopwatch
             timer = new Stopwatch();
             timer.Reset();
@@ -68,10 +68,6 @@ namespace Template_P3
             transform *= Matrix4.CreateTranslation(0, -4, -15);
             transform *= Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
 
-            Matrix4 camera = Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
-            sceneGraph scene = new sceneGraph();
-            scene.Render(camera);
-
             transformfloor *= transform;
 
             // update rotation
@@ -97,6 +93,13 @@ namespace Template_P3
                 klok_basis.Render(shader, transform, wood);
                 floor.Render(shader, transformfloor, paint);
             }
+
+
+            // NB belangrijk! alleen dit moet blijven staan in de RenderGL methode!
+            // De overige commando's moeten worden verplaatst naar andere locaties, zodat deze verschillend kunnen worden aangeroepen!
+            Matrix4 camera = Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
+            sceneGraph scene = new sceneGraph();
+            scene.Render(camera);
         }
     }
 

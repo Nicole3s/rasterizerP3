@@ -33,7 +33,10 @@ namespace Template_P3
         public void Render(Matrix4 cameramatrix)
         {
             foreach(scenenode ding in objecten){
-
+                if(ding.parent != null)
+                {
+                    // vermenigvuldig met de translatie en rotatie van de parent
+                }
             }
         } 
 

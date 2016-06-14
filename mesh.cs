@@ -17,7 +17,8 @@ public class Mesh
 	int triangleBufferId;					// triangle buffer
 	int quadBufferId;                       // quad buffer
     public Matrix4 transformatie, rotatie;  // iedere mesh heeft een eigen transformatie en rotatie
-    public Mesh parent;
+    public Mesh parent = null;
+    float a = 0;
 
         // NB voeg een model view matrix toe!
         // NB voeg een transform methode toe, 
@@ -29,6 +30,15 @@ public class Mesh
 		MeshLoader loader = new MeshLoader();
 		loader.Load( this, fileName );
 	}
+
+    public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz)
+        {
+            MeshLoader loader = new MeshLoader();
+            loader.Load(this, fileName);
+            parent = ouder;
+            transformatie = Matrix4.CreateTranslation(transx, transy, transz);
+            rotatie = Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), a);
+        }
 
 	// initialization; called during first render
 	public void Prepare( Shader shader )
