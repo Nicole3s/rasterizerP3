@@ -70,6 +70,8 @@
     <Compile Include="light.cs" />
     <Compile Include="mesh.cs" />
     <Compile Include="meshLoader.cs" />
+    <Compile Include="quad.cs" />
+    <Compile Include="rendertarget.cs" />
     <Compile Include="sceneGraph.cs" />
     <Compile Include="shader.cs" />
     <Compile Include="surface.cs" />
