@@ -30,7 +30,7 @@ namespace Template_P3
             // load teapot
             mesh = new Mesh("../../assets/teapot.obj");
             floor = new Mesh("../../assets/floortest2.obj");
-            klok_basis = new Mesh("../../assets/klok_basis.obj");
+            klok_basis = new Mesh("../../assets/donut.obj");
             // initialize stopwatch
             timer = new Stopwatch();
             timer.Reset();
