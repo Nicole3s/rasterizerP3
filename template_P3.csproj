@@ -73,6 +73,7 @@
     <Compile Include="quad.cs" />
     <Compile Include="rendertarget.cs" />
     <Compile Include="sceneGraph.cs" />
+    <Compile Include="scenenode.cs" />
     <Compile Include="shader.cs" />
     <Compile Include="surface.cs" />
     <Compile Include="template.cs" />

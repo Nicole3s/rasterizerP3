@@ -16,6 +16,8 @@ public class Mesh
 	int vertexBufferId;						// vertex buffer
 	int triangleBufferId;					// triangle buffer
 	int quadBufferId;                       // quad buffer
+    public Matrix4 transformatie, rotatie;  // iedere mesh heeft een eigen transformatie en rotatie
+    public Mesh parent;
 
         // NB voeg een model view matrix toe!
         // NB voeg een transform methode toe, 

@@ -13,7 +13,7 @@ namespace Template_P3
     {
         // member variables
         public Surface screen;                  // background surface for printing etc.
-        Mesh mesh, floor, ding, klok_basis;                       // a mesh to draw using OpenGL
+        Mesh mesh, floor, klok_basis;                       // a mesh to draw using OpenGL
         const float PI = 3.1415926535f;         // PI
         float a = 0;                            // teapot rotation angle
         Stopwatch timer;                        // timer for measuring frame duration
@@ -30,7 +30,6 @@ namespace Template_P3
             // load teapot
             mesh = new Mesh("../../assets/teapot.obj");
             floor = new Mesh("../../assets/floortest2.obj");
-                    //ding = new Mesh("../../assets/objectje.obj");
             klok_basis = new Mesh("../../assets/klok_basis.obj");
             // initialize stopwatch
             timer = new Stopwatch();
@@ -69,6 +68,10 @@ namespace Template_P3
             transform *= Matrix4.CreateTranslation(0, -4, -15);
             transform *= Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
 
+            Matrix4 camera = Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
+            sceneGraph scene = new sceneGraph();
+            scene.Render(camera);
+
             transformfloor *= transform;
 
             // update rotation
@@ -81,7 +84,7 @@ namespace Template_P3
                 target.Bind();
 
                 // render scene to render target
-                klok_basis.Render(shader, transform, paint);
+                klok_basis.Render(shader, transform, wood);
                 floor.Render(shader, transformfloor, paint);
 
                 // render quad
@@ -91,7 +94,7 @@ namespace Template_P3
             else
             {
                 // render scene directly to the screen
-                klok_basis.Render(shader, transform, paint);
+                klok_basis.Render(shader, transform, wood);
                 floor.Render(shader, transformfloor, paint);
             }
         }
