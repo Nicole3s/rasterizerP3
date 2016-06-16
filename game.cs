@@ -28,11 +28,16 @@ namespace Template_P3
         // initialize
         public void Init()
         {
+            // load a texture
+            wood = new Texture("../../assets/wood.jpg");
+            paint = new Texture("../../assets/paint.jpg");
+            wol = new Texture("../../assets/wol.jpg");
+
             // load teapot
             // public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotx, float roty, float rotz)
-            Mesh mesh = new Mesh("../../assets/teapot.obj", null, 1, 1, 1, 0, 1, 0);
-            Mesh floor = new Mesh("../../assets/floortest2.obj", mesh, 1, 1, 1, 0, 1, 0);
-            Mesh klok_basis = new Mesh("../../assets/klok_basis.obj", mesh, 1, 1, 1, 0, 1, 0);
+            Mesh mesh = new Mesh("../../assets/teapot.obj", null, 1, 1, 1, 0, 1, 0, paint);
+            Mesh floor = new Mesh("../../assets/floortest2.obj", mesh, 1, 1, 1, 0, 1, 0, wood);
+            Mesh klok_basis = new Mesh("../../assets/klok_basis.obj", mesh, 1, 1, 1, 0, 1, 0, wol);
 
             // create scenegraph and add meshes
             scenegraph = new sceneGraph();
@@ -97,7 +102,7 @@ namespace Template_P3
                 target.Bind();
 
                 // render scene to render target
-                scenegraph.Render(camera, a);
+                scenegraph.Render(camera, a, shader, postproc);
 
                 // render quad
                 target.Unbind();
@@ -106,7 +111,7 @@ namespace Template_P3
             else
             {
                 // render scene directly to the screen
-                scenegraph.Render(camera, a);
+                scenegraph.Render(camera, a, shader, postproc);
             }
         }
     }

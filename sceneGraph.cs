@@ -16,7 +16,7 @@ namespace Template_P3
         //float a = 0;
         const float PI = 3.1415926535f;         // PI
         Shader shader, postproc;
-        Texture wol, paint, wood;
+        
 
 
         // elke mesh heeft zn eigen transformatie en rotatie
@@ -46,34 +46,21 @@ namespace Template_P3
             return output;
         }
 
-        public void Render(Matrix4 cameramatrix, float a)
+        public void Render(Matrix4 cameramatrix, float a, Shader shader, Shader postproc)
         {
-
-            // create shaders
-            shader = new Shader("../../shaders/vs.glsl", "../../shaders/fs.glsl");
-            postproc = new Shader("../../shaders/vs_post.glsl", "../../shaders/fs_post.glsl");
-            // load a texture
-            wood = new Texture("../../assets/wood.jpg");
-            paint = new Texture("../../assets/paint.jpg");
-            wol = new Texture("../../assets/wol.jpg");
-
-            //Matrix4 transform = Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), a);
-            //transform *= Matrix4.CreateTranslation(0, -4, -15);
-            //klok_basis.Render(shader, transform, wood);
-
             foreach (Mesh ding in objecten){
                 if(ding.parent != null)
                 {
                     // vermenigvuldig met de translatie en rotatie van de parent
                     // tel op bij locatie van de parent
                     Matrix4 transform = Vermenigvuldigparent(ding, a) * cameramatrix;
-                    ding.Render(shader, transform, paint);
+                    ding.Render(shader, transform, ding.textuur);
                     ding.a = a;
                 }
                 else
                 {
                     Matrix4 transform = ding.Transform(a) * ding.locatie *  cameramatrix;
-                    ding.Render(shader, transform, paint);
+                    ding.Render(shader, transform, ding.textuur);
                     ding.a = a;
                 }
             }            

@@ -20,6 +20,7 @@ public class Mesh
     public Mesh parent = null;
     public float a;
     float rotx, roty, rotz;
+    public Texture textuur;
 
         // NB voeg een model view matrix toe!
         // NB voeg een transform methode toe, 
@@ -32,13 +33,14 @@ public class Mesh
 		loader.Load( this, fileName );
 	}
 
-    public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotX, float rotY, float rotZ)
+    public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotX, float rotY, float rotZ, Texture texture)
         {
             MeshLoader loader = new MeshLoader();
             loader.Load(this, fileName);
             parent = ouder;
             locatie = Matrix4.CreateTranslation(0, -4, -15);
             rotx = rotX; roty = rotY; rotz = rotZ;
+            textuur = texture;
         }
 
     public Matrix4 Transform(float a)
