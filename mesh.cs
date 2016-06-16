@@ -16,9 +16,10 @@ public class Mesh
 	int vertexBufferId;						// vertex buffer
 	int triangleBufferId;					// triangle buffer
 	int quadBufferId;                       // quad buffer
-    public Matrix4 transformatie, rotatie;  // iedere mesh heeft een eigen transformatie en rotatie
+    public Matrix4 locatie;        // iedere mesh heeft een eigen transformatie en rotatie
     public Mesh parent = null;
-    float a = 0;
+    public float a;
+    float rotx, roty, rotz;
 
         // NB voeg een model view matrix toe!
         // NB voeg een transform methode toe, 
@@ -31,13 +32,20 @@ public class Mesh
 		loader.Load( this, fileName );
 	}
 
-    public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz)
+    public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotX, float rotY, float rotZ)
         {
             MeshLoader loader = new MeshLoader();
             loader.Load(this, fileName);
             parent = ouder;
-            transformatie = Matrix4.CreateTranslation(transx, transy, transz);
-            rotatie = Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), a);
+            locatie = Matrix4.CreateTranslation(0, -4, -15);
+            rotx = rotX; roty = rotY; rotz = rotZ;
+        }
+
+    public Matrix4 Transform(float a)
+        {
+            Matrix4 rotatie = Matrix4.CreateFromAxisAngle(new Vector3(rotx, roty, rotz), a);
+
+            return rotatie;
         }
 
 	// initialization; called during first render
@@ -61,6 +69,7 @@ public class Mesh
 			GL.BufferData( BufferTarget.ElementArrayBuffer, (IntPtr)(quads.Length * Marshal.SizeOf( typeof( ObjQuad ) )), quads, BufferUsageHint.StaticDraw );
 		}
 	}
+
 
 	// render the mesh using the supplied shader and matrix
 	public void Render( Shader shader, Matrix4 transform, Texture texture )

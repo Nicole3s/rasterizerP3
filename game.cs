@@ -13,24 +13,33 @@ namespace Template_P3
     {
         // member variables
         public Surface screen;                  // background surface for printing etc.
-        Mesh mesh, floor, klok_basis;                       // a mesh to draw using OpenGL
+        //public Mesh mesh, floor, klok_basis;    // a mesh to draw using OpenGL
         const float PI = 3.1415926535f;         // PI
         float a = 0;                            // teapot rotation angle
         Stopwatch timer;                        // timer for measuring frame duration
-        Shader shader;                          // shader to use for rendering
-        Shader postproc;                        // shader to use for post processing
-        Texture wood, paint, wol;               // texture to use for rendering
+        public Shader shader;                   // shader to use for rendering
+        public Shader postproc;                 // shader to use for post processing
+        public Texture wood, paint, wol;        // texture to use for rendering
         RenderTarget target;                    // intermediate render target
         ScreenQuad quad;                        // screen filling quad for post processing
         bool useRenderTarget = true;
+        sceneGraph scenegraph;                  // game exists of a scenegraph
 
         // initialize
         public void Init()
         {
             // load teapot
-            mesh = new Mesh("../../assets/teapot.obj");
-            floor = new Mesh("../../assets/floortest2.obj");
-            klok_basis = new Mesh("../../assets/klok_basis.obj");
+            // public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotx, float roty, float rotz)
+            Mesh mesh = new Mesh("../../assets/teapot.obj", null, 1, 1, 1, 0, 1, 0);
+            Mesh floor = new Mesh("../../assets/floortest2.obj", mesh, 1, 1, 1, 0, 1, 0);
+            Mesh klok_basis = new Mesh("../../assets/klok_basis.obj", mesh, 1, 1, 1, 0, 1, 0);
+
+            // create scenegraph and add meshes
+            scenegraph = new sceneGraph();
+            scenegraph.objecten.Add(mesh);
+            scenegraph.objecten.Add(floor);
+            scenegraph.objecten.Add(klok_basis);
+
             // initialize stopwatch
             timer = new Stopwatch();
             timer.Reset();
@@ -56,23 +65,31 @@ namespace Template_P3
         // tick for OpenGL rendering code
         public void RenderGL()
         {
+            /*   // measure frame duration
+               float frameDuration = timer.ElapsedMilliseconds;
+               timer.Reset();
+               timer.Start();
+
+               // prepare matrix for vertex shader
+               Matrix4 transform = Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), a);
+               Matrix4 transformfloor = Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), a);
+
+               transform *= Matrix4.CreateTranslation(0, -4, -15);
+               transform *= Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
+
+               transformfloor *= transform;*/
+
             // measure frame duration
             float frameDuration = timer.ElapsedMilliseconds;
             timer.Reset();
             timer.Start();
 
-            // prepare matrix for vertex shader
-            Matrix4 transform = Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), a);
-            Matrix4 transformfloor = Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), a);
-
-            transform *= Matrix4.CreateTranslation(0, -4, -15);
-            transform *= Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
-
-            transformfloor *= transform;
-
             // update rotation
             a += 0.001f * frameDuration;
-            if (a > 2 * PI) a -= 2 * PI;
+               if (a > 2 * PI) a -= 2 * PI;
+               
+
+            Matrix4 camera = Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
 
             if (useRenderTarget)
             {
@@ -80,8 +97,7 @@ namespace Template_P3
                 target.Bind();
 
                 // render scene to render target
-                klok_basis.Render(shader, transform, wood);
-                floor.Render(shader, transformfloor, paint);
+                scenegraph.Render(camera, a);
 
                 // render quad
                 target.Unbind();
@@ -90,16 +106,8 @@ namespace Template_P3
             else
             {
                 // render scene directly to the screen
-                klok_basis.Render(shader, transform, wood);
-                floor.Render(shader, transformfloor, paint);
+                scenegraph.Render(camera, a);
             }
-
-
-            // NB belangrijk! alleen dit moet blijven staan in de RenderGL methode!
-            // De overige commando's moeten worden verplaatst naar andere locaties, zodat deze verschillend kunnen worden aangeroepen!
-            Matrix4 camera = Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
-            sceneGraph scene = new sceneGraph();
-            scene.Render(camera);
         }
     }
 

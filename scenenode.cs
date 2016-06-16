@@ -10,9 +10,10 @@ namespace Template_P3
     {
         public Mesh current, parent;
 
-        scenenode(Mesh mesh, Mesh parent)
+        public scenenode(Mesh mesh, Mesh ouder)
         {
-
+            current = mesh;
+            parent = ouder;
         }
     }
 }
