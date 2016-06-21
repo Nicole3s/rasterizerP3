@@ -18,5 +18,10 @@ void main()
 
 	// forward normal and uv coordinate; will be interpolated over triangle
 	normal = transform * vec4( vNormal, 0.0f );
+	
+	//vec4 norm = transform * vec4(vPosition, 1,0);
+	//normal = vec3(norm) / norm.a;
 	uv = vUV;
+	//uv = vec3()
 }
+

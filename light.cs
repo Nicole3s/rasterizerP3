@@ -1,13 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.Globalization;
+using System.Threading;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
-namespace template_P3
+namespace Template_P3
 {
-    class light
+    public class Light
     {
+        Vector3 location, color;
+        public Light(Vector3 locatie, Vector3 kleur)
+        {
+            location = locatie;
+            color = kleur;
+            
+        }
         // hier sla je de informatie van de lichtbronnen in op.
         // je wilt verschillende lichtbronnen in je scenegraph kunnen plaatsen
         // maar om de opdracht te halen is één lichtbron genoeg
