@@ -41,7 +41,6 @@ namespace Template_P3
                 transform = ding.Transform(a);
                 transform *= cameramatrix;
                 ding.Render(shader, transform, ding.textuur);
-                //ding.a = a * ding.a;
             }            
         } 
 

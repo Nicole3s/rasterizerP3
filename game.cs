@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using OpenTK;
+using System.Windows;
+using System;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
@@ -33,17 +35,35 @@ namespace Template_P3
             paint = new Texture("../../assets/paint.jpg");
             wol = new Texture("../../assets/wol.jpg");
 
-            // load teapot
-            // public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotx, float roty, float rotz)
-            Mesh mesh = new Mesh("../../assets/teapot.obj", null, 0, 0, -15, 0, 1, 0, paint, 1);
-            Mesh floor = new Mesh("../../assets/floortest2.obj", mesh, -10, 0, -15, 0, 1, 0, wood, 2);
-            Mesh klok_basis = new Mesh("../../assets/klok_basis.obj", mesh, 10, 0, 0, 0, 1, 0, wol, 2);
+            // load teapot basis and floor
+            // public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotx, float roty, float rotz, Texture texture, float rotatiefactor)
+            Mesh theepot_basis = new Mesh("../../assets/teapot.obj", null, 0, -3, -15, 0, 1, 0, paint, 0.5f);
+            Mesh floor = new Mesh("../../assets/floor.obj", null, 0, -7, -15, 0, 1, 0, wood, 0);
 
             // create scenegraph and add meshes
             scenegraph = new sceneGraph();
-            scenegraph.objecten.Add(mesh);
+            scenegraph.objecten.Add(theepot_basis);
             scenegraph.objecten.Add(floor);
-            scenegraph.objecten.Add(klok_basis);
+
+            // create several teapots in layers 
+            for(int i = 0; i < 2; i++)
+            {
+                for(int j = 0; j < 2; j++)
+                {
+                    Mesh theepot_eerste_laag = new Mesh("../../assets/teapot_half.obj", theepot_basis, -3.5f + 7 * i, 6, -3.5f + 7 * j, 0, 1, 0, wood, -2 + (i+ j) * 0.3f);
+                    scenegraph.objecten.Add(theepot_eerste_laag);
+
+                    // maak de tweede laag bovenop de eerste laag
+                    for (int k = 0; k < 2; k++)
+                    {
+                        for (int l = 0; l < 2; l++)
+                        {
+                            Mesh theepot_tweede_laag = new Mesh("../../assets/teapot_kwart.obj", theepot_eerste_laag, -2.0f + 4 * k, 4, -2.0f + 4 * l, 0, 1, 0, wol, 2 + (k+l) * 0.4f);
+                            scenegraph.objecten.Add(theepot_tweede_laag);
+                        }
+                    }
+                }
+            }
 
             // initialize stopwatch
             timer = new Stopwatch();
@@ -65,25 +85,20 @@ namespace Template_P3
         public void Tick()
         {
             screen.Clear(0);
+            //keyinput();
         }
+
+       /* void keyinput(object o, KeyPressEventArgs e)
+        {
+            if (e.keycode)
+            {
+
+            }
+        }*/
 
         // tick for OpenGL rendering code
         public void RenderGL()
         {
-            /*   // measure frame duration
-               float frameDuration = timer.ElapsedMilliseconds;
-               timer.Reset();
-               timer.Start();
-
-               // prepare matrix for vertex shader
-               Matrix4 transform = Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), a);
-               Matrix4 transformfloor = Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), a);
-
-               transform *= Matrix4.CreateTranslation(0, -4, -15);
-               transform *= Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
-
-               transformfloor *= transform;*/
-
             // measure frame duration
             float frameDuration = timer.ElapsedMilliseconds;
             timer.Reset();
@@ -91,10 +106,10 @@ namespace Template_P3
 
             // update rotation
             a += 0.001f * frameDuration;
-               if (a > 2 * PI) a -= 2 * PI;
+               if (a > 4 * PI) a -= 4 * PI;
                
 
-            Matrix4 camera = Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
+            Matrix4 camera = Matrix4.CreatePerspectiveFieldOfView(1.3f, 1.3f, 0.01f, 1000);
 
             if (useRenderTarget)
             {
