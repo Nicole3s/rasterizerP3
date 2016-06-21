@@ -34,35 +34,14 @@ namespace Template_P3
         // EISEN: er mogen geen restricties staan op de diepte of op het aantal meshes,
         // dus listsysteem is geschikt
 
-        Matrix4 Vermenigvuldigparent(Mesh mesh, float a)
-        {
-            Matrix4 output = mesh.locatie + mesh.parent.locatie;
-            Matrix4 rotatie = mesh.Transform(a);
-            output = mesh.parent.Transform(a) * output;
-            if(mesh.parent.parent != null)
-            {
-                output *= Vermenigvuldigparent(mesh.parent, a);
-            }
-            return output;
-        }
-
         public void Render(Matrix4 cameramatrix, float a, Shader shader, Shader postproc)
         {
+            Matrix4 transform;
             foreach (Mesh ding in objecten){
-                if(ding.parent != null)
-                {
-                    // vermenigvuldig met de translatie en rotatie van de parent
-                    // tel op bij locatie van de parent
-                    Matrix4 transform = Vermenigvuldigparent(ding, a) * cameramatrix;
-                    ding.Render(shader, transform, ding.textuur);
-                    ding.a = a;
-                }
-                else
-                {
-                    Matrix4 transform = ding.Transform(a) * ding.locatie *  cameramatrix;
-                    ding.Render(shader, transform, ding.textuur);
-                    ding.a = a;
-                }
+                transform = ding.Transform(a);
+                transform *= cameramatrix;
+                ding.Render(shader, transform, ding.textuur);
+                //ding.a = a * ding.a;
             }            
         } 
 

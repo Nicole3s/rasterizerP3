@@ -35,9 +35,9 @@ namespace Template_P3
 
             // load teapot
             // public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotx, float roty, float rotz)
-            Mesh mesh = new Mesh("../../assets/teapot.obj", null, 1, 1, 1, 0, 1, 0, paint);
-            Mesh floor = new Mesh("../../assets/floortest2.obj", mesh, 1, 1, 1, 0, 1, 0, wood);
-            Mesh klok_basis = new Mesh("../../assets/klok_basis.obj", mesh, 1, 1, 1, 0, 1, 0, wol);
+            Mesh mesh = new Mesh("../../assets/teapot.obj", null, 0, 0, -15, 0, 1, 0, paint, 1);
+            Mesh floor = new Mesh("../../assets/floortest2.obj", mesh, -10, 0, -15, 0, 1, 0, wood, 2);
+            Mesh klok_basis = new Mesh("../../assets/klok_basis.obj", mesh, 10, 0, 0, 0, 1, 0, wol, 2);
 
             // create scenegraph and add meshes
             scenegraph = new sceneGraph();

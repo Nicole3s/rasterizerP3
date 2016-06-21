@@ -33,21 +33,26 @@ public class Mesh
 		loader.Load( this, fileName );
 	}
 
-    public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotX, float rotY, float rotZ, Texture texture)
+    public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotX, float rotY, float rotZ, Texture texture, float A)
         {
             MeshLoader loader = new MeshLoader();
             loader.Load(this, fileName);
             parent = ouder;
-            locatie = Matrix4.CreateTranslation(0, -4, -15);
+            locatie = Matrix4.CreateTranslation(transx, transy, transz);
             rotx = rotX; roty = rotY; rotz = rotZ;
             textuur = texture;
+            a = A;
         }
 
-    public Matrix4 Transform(float a)
+    public Matrix4 Transform(float A)
         {
-            Matrix4 rotatie = Matrix4.CreateFromAxisAngle(new Vector3(rotx, roty, rotz), a);
+            Matrix4 transform = Matrix4.CreateFromAxisAngle(new Vector3(rotx, roty, rotz), a * A) * locatie;
+            if (parent != null)
+            {
+                transform = transform * parent.Transform(A);
+            }
 
-            return rotatie;
+            return transform;
         }
 
 	// initialization; called during first render
