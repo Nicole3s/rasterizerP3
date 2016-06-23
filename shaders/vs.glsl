@@ -6,8 +6,9 @@ in vec3 vNormal;			// untransformed vertex normal
 in vec3 vPosition;			// untransformed vertex position
 
 // shader output
-out vec4 normal;			// transformed vertex normal
-out vec2 uv;				
+out vec3 normal;			// transformed vertex normal
+out vec2 uv;		
+out vec3 positie;		
 uniform mat4 transform;
  
 // vertex shader
@@ -17,11 +18,11 @@ void main()
 	gl_Position = transform * vec4(vPosition, 1.0);
 
 	// forward normal and uv coordinate; will be interpolated over triangle
-	normal = transform * vec4( vNormal, 0.0f );
-	
-	//vec4 norm = transform * vec4(vPosition, 1,0);
-	//normal = vec3(norm) / norm.a;
+	normal = vec3(transform * vec4( vNormal, 0.0f ));
+	positie = vPosition;
 	uv = vUV;
-	//uv = vec3()
+	
 }
+
+
 
