@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="camera.cs" />
     <Compile Include="game.cs" />
     <Compile Include="light.cs" />
     <Compile Include="mesh.cs" />
@@ -73,7 +74,6 @@
     <Compile Include="quad.cs" />
     <Compile Include="rendertarget.cs" />
     <Compile Include="sceneGraph.cs" />
-    <Compile Include="scenenode.cs" />
     <Compile Include="shader.cs" />
     <Compile Include="surface.cs" />
     <Compile Include="template.cs" />

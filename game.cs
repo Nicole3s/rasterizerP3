@@ -26,6 +26,7 @@ namespace Template_P3
         ScreenQuad quad;                        // screen filling quad for post processing
         bool useRenderTarget = true;
         sceneGraph scenegraph;                  // game exists of a scenegraph
+        Camera camera;
 
         // initialize
         public void Init()
@@ -79,13 +80,15 @@ namespace Template_P3
             // create the render target
             target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
+
+            camera = new Camera();
         }
 
         // tick for background surface
         public void Tick()
         {
             screen.Clear(0);
-            //keyinput();
+            camera.onKeypress();
         }
 
        /* void keyinput(object o, KeyPressEventArgs e)
@@ -107,9 +110,6 @@ namespace Template_P3
             // update rotation
             a += 0.001f * frameDuration;
                if (a > 4 * PI) a -= 4 * PI;
-               
-
-            Matrix4 camera = Matrix4.CreatePerspectiveFieldOfView(1.3f, 1.3f, 0.01f, 1000);
 
             if (useRenderTarget)
             {
@@ -117,7 +117,7 @@ namespace Template_P3
                 target.Bind();
 
                 // render scene to render target
-                scenegraph.Render(camera, a, shader, postproc);
+                scenegraph.Render(camera.cameramatrix, a, shader, postproc);
 
                 // render quad
                 target.Unbind();
@@ -126,7 +126,7 @@ namespace Template_P3
             else
             {
                 // render scene directly to the screen
-                scenegraph.Render(camera, a, shader, postproc);
+                scenegraph.Render(camera.cameramatrix, a, shader, postproc);
             }
         }
     }

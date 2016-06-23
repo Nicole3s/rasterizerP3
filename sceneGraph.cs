@@ -16,14 +16,7 @@ namespace Template_P3
         //float a = 0;
         const float PI = 3.1415926535f;         // PI
         Shader shader, postproc;
-        
 
-
-        // elke mesh heeft zn eigen transformatie en rotatie
-        // elke mesh krijgt een parent
-        // bij het renderen pak je een mesh en de transformation en die vermenigvuldig je met de parent
-        // extra class scenenode met mesh, parent,??
-        // list van scenenodes??
         // mesh evt transformatie en rotatie als property
 
         // scenegraph bestaat uit hierarchie van meshes

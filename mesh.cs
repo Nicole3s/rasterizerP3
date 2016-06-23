@@ -17,7 +17,7 @@ public class Mesh
 	int triangleBufferId;					// triangle buffer
 	int quadBufferId;                       // quad buffer
     public Matrix4 locatie;        // iedere mesh heeft een eigen transformatie en rotatie
-    public Mesh parent = null;
+    public Mesh parent;
     public float a;
     float rotx, roty, rotz;
     public Texture textuur;
@@ -41,7 +41,7 @@ public class Mesh
             locatie = Matrix4.CreateTranslation(transx, transy, transz);
             rotx = rotX; roty = rotY; rotz = rotZ;
             textuur = texture;
-            a = A;
+            a = A; // de rotatiesnelheid tov de parent
         }
 
     public Matrix4 Transform(float A)
