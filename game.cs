@@ -15,9 +15,6 @@ namespace Template_P3
     {
         // member variables
         public Surface screen;                  // background surface for printing etc.
-        //public Mesh mesh, floor, klok_basis;    // a mesh to draw using OpenGL
-        const float PI = 3.1415926535f;         // PI
-        float a = 0;                            // teapot rotation angle
         Stopwatch timer;                        // timer for measuring frame duration
         public Shader shader;                   // shader to use for rendering
         public Shader postproc;                 // shader to use for post processing
@@ -38,7 +35,7 @@ namespace Template_P3
 
             // load teapot basis and floor
             // public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotx, float roty, float rotz, Texture texture, float rotatiefactor)
-            Mesh theepot_basis = new Mesh("../../assets/teapot.obj", null, 0, -3, -15, 0, 1, 0, paint, 0.5f);
+            Mesh theepot_basis = new Mesh("../../assets/teapot.obj", null, 0, -3, -15, 0, 1, 0, paint, 0.05f);
             Mesh floor = new Mesh("../../assets/floor.obj", null, 0, -7, -15, 0, 1, 0, wood, 0);
 
             // create scenegraph and add meshes
@@ -51,7 +48,7 @@ namespace Template_P3
             {
                 for(int j = 0; j < 2; j++)
                 {
-                    Mesh theepot_eerste_laag = new Mesh("../../assets/teapot_half.obj", theepot_basis, -3.5f + 7 * i, 6, -3.5f + 7 * j, 0, 1, 0, wood, -2 + (i+ j) * 0.3f);
+                    Mesh theepot_eerste_laag = new Mesh("../../assets/teapot_half.obj", theepot_basis, -3.5f + 7 * i, 6, -3.5f + 7 * j, 0, 1, 0, wood, (i+j) * 0.2f + 0.1f);
                     scenegraph.objecten.Add(theepot_eerste_laag);
 
                     // maak de tweede laag bovenop de eerste laag
@@ -59,7 +56,7 @@ namespace Template_P3
                     {
                         for (int l = 0; l < 2; l++)
                         {
-                            Mesh theepot_tweede_laag = new Mesh("../../assets/teapot_kwart.obj", theepot_eerste_laag, -2.0f + 4 * k, 4, -2.0f + 4 * l, 0, 1, 0, wol, 2 + (k+l) * 0.4f);
+                            Mesh theepot_tweede_laag = new Mesh("../../assets/teapot_kwart.obj", theepot_eerste_laag, -2.0f + 4 * k, 4, -2.0f + 4 * l, 0, 1, 0, wol, (k+l) * 0.25f + 0.1f);
                             scenegraph.objecten.Add(theepot_tweede_laag);
                         }
                     }
@@ -91,14 +88,6 @@ namespace Template_P3
             camera.onKeypress();
         }
 
-       /* void keyinput(object o, KeyPressEventArgs e)
-        {
-            if (e.keycode)
-            {
-
-            }
-        }*/
-
         // tick for OpenGL rendering code
         public void RenderGL()
         {
@@ -107,17 +96,13 @@ namespace Template_P3
             timer.Reset();
             timer.Start();
 
-            // update rotation
-            a += 0.001f * frameDuration;
-               if (a > 4 * PI) a -= 4 * PI;
-
             if (useRenderTarget)
             {
                 // enable render target
                 target.Bind();
 
                 // render scene to render target
-                scenegraph.Render(camera.cameramatrix, a, shader, postproc);
+                scenegraph.Render(camera.cameramatrix, frameDuration, shader, postproc);
 
                 // render quad
                 target.Unbind();
@@ -126,7 +111,7 @@ namespace Template_P3
             else
             {
                 // render scene directly to the screen
-                scenegraph.Render(camera.cameramatrix, a, shader, postproc);
+                scenegraph.Render(camera.cameramatrix, frameDuration, shader, postproc);
             }
         }
     }

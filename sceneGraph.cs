@@ -27,11 +27,11 @@ namespace Template_P3
         // EISEN: er mogen geen restricties staan op de diepte of op het aantal meshes,
         // dus listsysteem is geschikt
 
-        public void Render(Matrix4 cameramatrix, float a, Shader shader, Shader postproc)
+        public void Render(Matrix4 cameramatrix, float frameDuration, Shader shader, Shader postproc)
         {
             Matrix4 transform;
             foreach (Mesh ding in objecten){
-                transform = ding.Transform(a);
+                transform = ding.Transform(frameDuration);
                 transform *= cameramatrix;
                 ding.Render(shader, transform, ding.textuur);
             }            

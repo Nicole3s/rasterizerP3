@@ -18,7 +18,8 @@ public class Mesh
 	int quadBufferId;                       // quad buffer
     public Matrix4 locatie;        // iedere mesh heeft een eigen transformatie en rotatie
     public Mesh parent;
-    public float a;
+    public float a, A = 0;
+    const float PI = 3.1415926535f;         // PI
     float rotx, roty, rotz;
     public Texture textuur;
 
@@ -33,7 +34,7 @@ public class Mesh
 		loader.Load( this, fileName );
 	}
 
-    public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotX, float rotY, float rotZ, Texture texture, float A)
+    public Mesh(string fileName, Mesh ouder, float transx, float transy, float transz, float rotX, float rotY, float rotZ, Texture texture, float B)
         {
             MeshLoader loader = new MeshLoader();
             loader.Load(this, fileName);
@@ -41,15 +42,19 @@ public class Mesh
             locatie = Matrix4.CreateTranslation(transx, transy, transz);
             rotx = rotX; roty = rotY; rotz = rotZ;
             textuur = texture;
-            a = A; // de rotatiesnelheid tov de parent
+            a = B; // de rotatiesnelheid tov de parent
         }
 
-    public Matrix4 Transform(float A)
+    public Matrix4 Transform(float frameDuration)
         {
-            Matrix4 transform = Matrix4.CreateFromAxisAngle(new Vector3(rotx, roty, rotz), a * A) * locatie;
+            // update rotation
+            A += 0.001f * frameDuration * a;
+            if (A > 4 * PI) A -= 4 * PI;
+
+            Matrix4 transform = Matrix4.CreateFromAxisAngle(new Vector3(rotx, roty, rotz), A) * locatie;
             if (parent != null)
             {
-                transform = transform * parent.Transform(A);
+                transform = transform * parent.Transform(frameDuration);
             }
 
             return transform;
