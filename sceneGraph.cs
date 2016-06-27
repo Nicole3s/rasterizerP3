@@ -13,19 +13,9 @@ namespace Template_P3
     class sceneGraph
     {
         public List<Mesh> objecten = new List<Mesh>();
-        //float a = 0;
-        const float PI = 3.1415926535f;         // PI
-        Shader shader, postproc;
+        //Shader shader, postproc;
 
         // mesh evt transformatie en rotatie als property
-
-        // scenegraph bestaat uit hierarchie van meshes
-        // wikipedia zei: linked lists, wij gebruiken list
-        // takenlijstje zegt: datastructuur implementeren, dus linked list is zeker
-        // een mogelijkheid
-
-        // EISEN: er mogen geen restricties staan op de diepte of op het aantal meshes,
-        // dus listsysteem is geschikt
 
         public void Render(Matrix4 cameramatrix, float frameDuration, Shader shader, Shader postproc)
         {
@@ -36,11 +26,5 @@ namespace Template_P3
                 ding.Render(shader, transform, ding.textuur);
             }            
         } 
-
-        // render hier alle meshes in de hierarchie RECURSIEF:
-            // Add a Render method to the scene graph class that 
-            // recursively processes the nodes in the tree, 
-            // while combining matrices, so that each mesh is drawn, 
-            // using the correct combined matrix. 
     }
 }

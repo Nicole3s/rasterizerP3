@@ -16,7 +16,7 @@ public class Mesh
 	int vertexBufferId;						// vertex buffer
 	int triangleBufferId;					// triangle buffer
 	int quadBufferId;                       // quad buffer
-    public Matrix4 locatie;        // iedere mesh heeft een eigen transformatie en rotatie
+    public Matrix4 locatie, rotatie;                 // iedere mesh heeft een eigen transformatie en rotatie
     public Mesh parent;
     public float a, A = 0;
     const float PI = 3.1415926535f;         // PI
@@ -51,7 +51,9 @@ public class Mesh
             A += 0.001f * frameDuration * a;
             if (A > 4 * PI) A -= 4 * PI;
 
-            Matrix4 transform = Matrix4.CreateFromAxisAngle(new Vector3(rotx, roty, rotz), A) * locatie;
+            rotatie = Matrix4.CreateFromAxisAngle(new Vector3(rotx, roty, rotz), A);
+
+            Matrix4 transform = rotatie * locatie;
             if (parent != null)
             {
                 transform = transform * parent.Transform(frameDuration);
