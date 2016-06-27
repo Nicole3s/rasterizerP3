@@ -20,7 +20,8 @@ public class Mesh
     public Mesh parent;
     public float a, A = 0;
     const float PI = 3.1415926535f;         // PI
-    float rotx, roty, rotz;
+    Vector3 rot;
+    //float rotx, roty, rotz;
     public Texture textuur;
 
         // NB voeg een model view matrix toe!
@@ -40,7 +41,7 @@ public class Mesh
             loader.Load(this, fileName);
             parent = ouder;
             locatie = Matrix4.CreateTranslation(transx, transy, transz);
-            rotx = rotX; roty = rotY; rotz = rotZ;
+            rot = new Vector3(rotX, rotY, rotZ);
             textuur = texture;
             a = B; // de rotatiesnelheid tov de parent
         }
@@ -51,7 +52,7 @@ public class Mesh
             A += 0.001f * frameDuration * a;
             if (A > 4 * PI) A -= 4 * PI;
 
-            rotatie = Matrix4.CreateFromAxisAngle(new Vector3(rotx, roty, rotz), A);
+            rotatie = locatie * Matrix4.CreateFromAxisAngle(rot, A);
 
             Matrix4 transform = rotatie * locatie;
             if (parent != null)
