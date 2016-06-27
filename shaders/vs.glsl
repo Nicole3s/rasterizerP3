@@ -1,7 +1,7 @@
 ﻿#version 330
  
 // shader input
-in vec2 vUV;				// vertex uv coordinate
+in vec2 vUV;				// vertex uv coordinate (van texture)
 in vec3 vNormal;			// untransformed vertex normal
 in vec3 vPosition;			// untransformed vertex position
 
@@ -9,7 +9,7 @@ in vec3 vPosition;			// untransformed vertex position
 out vec3 normal;			// transformed vertex normal
 out vec2 uv;		
 out vec3 positie;		
-uniform mat4 transform;
+uniform mat4 transform, rotatie;
  
 // vertex shader
 void main()

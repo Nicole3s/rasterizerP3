@@ -9,14 +9,14 @@ namespace Template_P3
 {
     public class Light
     {   
-        Vector3 location, color/*, direction*/;
-        //float intensity;
-        public Light(Vector3 locatie, Vector3 kleur)
+        Vector3 location /*color, direction*/;
+        float intensity;
+        public Light(Vector3 locatie, float intensiteit)
         {
             location = locatie;
-            color = kleur;
+            //color = kleur;
            // direction = richting;
-           // intensity = intensiteit;
+            intensity = intensiteit;
             
             
         }
