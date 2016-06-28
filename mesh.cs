@@ -52,7 +52,7 @@ public class Mesh
             A += 0.001f * frameDuration * a;
             if (A > 4 * PI) A -= 4 * PI;
 
-            rotatie = locatie * Matrix4.CreateFromAxisAngle(rot, A);
+            rotatie = Matrix4.CreateFromAxisAngle(rot, A);
 
             Matrix4 transform = rotatie * locatie;
             if (parent != null)
@@ -63,6 +63,15 @@ public class Mesh
             return transform;
         }
 
+    Matrix4 roteerparent(Matrix4 Rotatie)
+        {
+            if(parent != null)
+            {
+                Rotatie *= parent.roteerparent(parent.rotatie);
+            }
+            return Rotatie;
+        }
+    
 	// initialization; called during first render
 	public void Prepare( Shader shader )
 	{
@@ -103,10 +112,10 @@ public class Mesh
 
 		// enable shader
 		GL.UseProgram( shader.programID );
-
-		// pass transform to vertex shader
-		GL.UniformMatrix4( shader.uniform_mview, false, ref transform );
-        GL.UniformMatrix4(shader.uniform_rotatie, false, ref rotatie);
+            Matrix4 roteer = roteerparent(rotatie);
+        // pass transform to vertex shader
+        GL.UniformMatrix4( shader.uniform_mview, false, ref transform );
+        GL.UniformMatrix4(shader.uniform_rotatie, false, ref roteer);
 
 		// enable position, normal and uv attributes
 		GL.EnableVertexAttribArray( shader.attribute_vpos );

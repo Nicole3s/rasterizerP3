@@ -102,7 +102,7 @@ namespace Template_P3
                 target.Bind();
 
                 // render scene to render target
-                scenegraph.Render(camera.cameramatrix, frameDuration, shader, postproc);
+                scenegraph.Render(camera.lookat * camera.cameramatrix, frameDuration, shader, postproc);
 
                 // render quad
                 target.Unbind();
@@ -111,7 +111,7 @@ namespace Template_P3
             else
             {
                 // render scene directly to the screen
-                scenegraph.Render(camera.cameramatrix, frameDuration, shader, postproc);
+                scenegraph.Render(camera.lookat * camera.cameramatrix, frameDuration, shader, postproc);
             }
         }
     }
