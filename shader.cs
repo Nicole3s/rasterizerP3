@@ -16,6 +16,7 @@ public class Shader
 	public int attribute_vuvs;
 	public int uniform_mview;
     public int uniform_rotatie;
+    public int uniform_camera;
 
 	// constructor
 	public Shader( String vertexShader, String fragmentShader )
@@ -33,6 +34,7 @@ public class Shader
 		attribute_vuvs = GL.GetAttribLocation( programID, "vUV" );
 		uniform_mview = GL.GetUniformLocation( programID, "transform" );
         uniform_rotatie = GL.GetUniformLocation(programID, "rotatie");
+        uniform_camera = GL.GetUniformLocation(programID, "camera");
         }
 
 	// loading shaders

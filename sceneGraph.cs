@@ -19,11 +19,11 @@ namespace Template_P3
 
         public void Render(Matrix4 cameramatrix, float frameDuration, Shader shader, Shader postproc)
         {
-            Matrix4 transform;
+            Matrix4 transform, camera;
             foreach (Mesh ding in objecten){
                 transform = ding.Transform(frameDuration);
-                transform *= cameramatrix;
-                ding.Render(shader, transform, ding.textuur);
+                camera = transform * cameramatrix;
+                ding.Render(shader, transform, ding.textuur, camera);
             }            
         } 
     }
