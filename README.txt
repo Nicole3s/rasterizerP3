@@ -14,8 +14,7 @@ A: roteer naar links (over de Y-as)
 D: roteer naar rechts (over de Y-as)
 W: roteer naar boven (over de X-as)
 S: roteer naar beneden (over de X-as)
-Z: roteer naar links (over de Z-as)
-X: roteer naar rechts (over de Z-as)
 
 Voor de implementatie van het Phong shading model hebben we ons laten inspireren door de informatie op 
-http://www.mathematik.uni-marburg.de/~thormae/lectures/graphics1/code/WebGLShaderLightMat/ShaderLightMat.html
+https://en.wikipedia.org/wiki/Blinn%E2%80%93Phong_shading_model
+

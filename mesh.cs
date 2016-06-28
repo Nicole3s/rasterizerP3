@@ -112,7 +112,9 @@ public class Mesh
 
 		// enable shader
 		GL.UseProgram( shader.programID );
-            Matrix4 roteer = roteerparent(rotatie);
+
+
+        Matrix4 roteer = roteerparent(rotatie);
         // pass transform to vertex shader
         GL.UniformMatrix4( shader.uniform_mview, false, ref transform );
         GL.UniformMatrix4(shader.uniform_rotatie, false, ref roteer);

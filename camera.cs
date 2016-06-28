@@ -17,16 +17,7 @@ namespace Template_P3
 
         public Matrix4 cameramatrix = Matrix4.CreatePerspectiveFieldOfView(1.3f, 1.3f, 0.01f, 1000);
         public Matrix4 lookat;
-        float stapgrootte = 0.25f;
-
-        // kijkrichting = (0,0,1)
-        // target = pos + kijkrichting
-        // right = up x kijkrichting
-        // up = kijkrichting x right
-            // naar rechts: target += 0.1 * right
-        // lookat(pos, target, up)
-        // cameramatrix vermenigvuldigen met lookat
-
+        float stapgrootte = 0.15f;
 
         public Camera()
         {
@@ -92,31 +83,31 @@ namespace Template_P3
             }
 
 
-            // bekijk de wereld vanuit een ander perspectief met ASDWZX
+            // bekijk de wereld vanuit een ander perspectief met ASDW
             if (keypressed[Key.D]) // kijk naar rechts
             {
-                kijkrichting = Vector3.Normalize(kijkrichting - stapgrootte * right);
+                kijkrichting = Vector3.Normalize(kijkrichting - 0.5f * stapgrootte * right);
                 right = Vector3.Normalize(Vector3.Cross(up, kijkrichting));
                 up = Vector3.Normalize(Vector3.Cross(kijkrichting, right));
                 updatelookat();
             }
             if (keypressed[Key.A]) // kijk naar links
             {
-                kijkrichting = Vector3.Normalize(kijkrichting + stapgrootte * right);
+                kijkrichting = Vector3.Normalize(kijkrichting + 0.5f * stapgrootte * right);
                 right = Vector3.Normalize(Vector3.Cross(up, kijkrichting));
                 up = Vector3.Normalize(Vector3.Cross(kijkrichting, right));
                 updatelookat();
             }
             if (keypressed[Key.S]) // kijk naar beneden
             {
-                kijkrichting = Vector3.Normalize(kijkrichting - stapgrootte * up);
+                kijkrichting = Vector3.Normalize(kijkrichting - 0.5f * stapgrootte * up);
                 right = Vector3.Normalize(Vector3.Cross(up, kijkrichting));
                 up = Vector3.Normalize(Vector3.Cross(kijkrichting, right));
                 updatelookat();
             }
             if (keypressed[Key.W]) // kijk naar boven
             {
-                kijkrichting = Vector3.Normalize(kijkrichting + stapgrootte * up);
+                kijkrichting = Vector3.Normalize(kijkrichting + 0.5f * stapgrootte * up);
                 right = Vector3.Normalize(Vector3.Cross(up, kijkrichting));
                 up = Vector3.Normalize(Vector3.Cross(kijkrichting, right));
                 updatelookat();

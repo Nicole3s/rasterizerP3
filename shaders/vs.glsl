@@ -18,8 +18,8 @@ void main()
 	gl_Position = camera * vec4(vPosition, 1.0);
 
 	// forward normal and uv coordinate; will be interpolated over triangle
-	normal =  (transform  * vec4( vNormal, 1.0f )).xyz;
-	pos = (camera *(vec4(vPosition, 1.0))).xyz;
+	normal =  (camera  * vec4( vNormal, 1.0f )).xyz;
+	pos = (camera * vec4(vPosition, 1.0)).xyz;
 	
 	
 	uv = vUV;

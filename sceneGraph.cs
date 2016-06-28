@@ -13,9 +13,6 @@ namespace Template_P3
     class sceneGraph
     {
         public List<Mesh> objecten = new List<Mesh>();
-        //Shader shader, postproc;
-
-        // mesh evt transformatie en rotatie als property
 
         public void Render(Matrix4 cameramatrix, float frameDuration, Shader shader, Shader postproc)
         {
